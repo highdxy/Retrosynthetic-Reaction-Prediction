@@ -17,4 +17,5 @@ Visualize Tool: RDKit
 |modelName|framework |score | f1 | em |
 | ------ |------|------ |------ | ------ |
 |transformer-base| tensor2tensor |0.627 | 0.764 | 0.218 |
+|transformer-merge| tensor2tensor |0.636 | 0.770 | 0.235 |
 |transformer-base| opennmt-py |0.646 | 0.860 | 0.002 |
