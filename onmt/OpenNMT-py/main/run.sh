@@ -6,28 +6,30 @@ if [ ! -d $TRAIN ];then
 	mkdir $TRAIN
 fi
 
-python ../train.py \
-       	-data data/rs \
-	-train_steps 200000 \
-       	-valid_steps 100 \
-	-save_checkpoint_steps 100 \
-	-save_model $TRAIN/rs \
-	-layers 4 \
-	-rnn_size 128 \
-	-word_vec_size 128 \
-	-max_grad_norm 0 \
-	-optim adam \
-	-encoder_type transformer \
-	-decoder_type transformer \
-       	-dropout 0.2 \
-	-param_init 0 \
-	-warmup_steps 2000 \
-	-position_encoding \
-	-learning_rate 0.05 \
-	-decay_method noam \
-	-gpu_ranks 0 -world_size 1 \
-	-tensorboard \
-	-tensorboard_log_dir $TRAIN
+#python ../train.py \
+#       	-data data/rs \
+#	-train_from $TRAIN/rs_step_21700.pt \
+#	-train_steps 200000 \
+#       	-valid_steps 500 \
+#	-save_checkpoint_steps 500 \
+#	-save_model $TRAIN/rs \
+#	-layers 4 \
+#	-rnn_size 128 \
+#	-word_vec_size 128 \
+#	-max_grad_norm 0 \
+#	-optim adam \
+#	-encoder_type transformer \
+#	-decoder_type transformer \
+#       	-dropout 0.2 \
+#	-param_init 0 \
+#	-warmup_steps 2000 \
+#	-position_encoding \
+#	-learning_rate 0.05 \
+#	-decay_method noam \
+#	-gpu_ranks 0 -world_size 1 \
+#	-tensorboard \
+#	-tensorboard_log_dir $TRAIN
+#
 
-#python ../translate.py -model model/rs_step_120000.pt -src rawdata/test_sources -output results/test_targets_  -batch_size 1000 -gpu 0 -replace_unk -verbose
-
+STEP=36500
+python ../translate.py -model $TRAIN/rs_step_$STEP.pt -src rawdata/test_sources -output $TRAIN/test_targets_  -batch_size 1000 -gpu 0 -replace_unk -verbose
