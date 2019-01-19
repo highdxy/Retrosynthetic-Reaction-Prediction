@@ -10,3 +10,10 @@ Framework: tensor2tensor
 
 Data format: SMILES
 
+Visualize Tool: RDKit
+
+### Evaluation:
+
+|modelName|framework |score | f1 | em |
+| ------ |------|------ |------ | ------ |
+|transformer-base| tensor2tensor |0.627 | 0.764 | 0.218 |
