@@ -20,3 +20,4 @@ Visualize Tool: RDKit
 |transformer-merge| tensor2tensor |0.636 | 0.770 | 0.235 |
 |transformer-base| opennmt-py |0.646 | 0.860 | 0.002 |
 |transformer-base-200000| opennmt-py |0.650 | 0.865 | 0.004 |
+|transformer-base-254000| opennmt-py |0.653 | 0.869 | 0.005 |
