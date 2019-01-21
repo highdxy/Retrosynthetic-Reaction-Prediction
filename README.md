@@ -22,3 +22,5 @@ Visualize Tool: RDKit
 |transformer-base-200000| opennmt-py |0.650 | 0.865 | 0.004 |
 |transformer-base-254000| opennmt-py |0.653 | 0.869 | 0.005 |
 |transformer-base-400000| opennmt-py |0.660 | 0.877 | 0.007 |
+|transformer-base-800000| opennmt-py |0.664 | 0.881 | 0.013 |
+|rnn-based-115000| opennmt-py |0.415 | 0.554 | 0.000 |
