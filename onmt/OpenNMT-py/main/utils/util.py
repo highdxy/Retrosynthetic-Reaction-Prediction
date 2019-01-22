@@ -1,5 +1,5 @@
 import collections
-
+import argparse
 from tqdm import tqdm
 from rdkit.Chem import AllChem,Draw
 
@@ -227,8 +227,8 @@ def eval(test_gold, test_pred):
         gold_line = gold_lines[i].strip()
         pred_line = pred_lines[i].strip()  
 
-        exact_num   += compute_exact_(gold_line, pred_line)
-        f1_all      += compute_f1_(gold_line, pred_line) 
+        exact_num   += compute_exact(gold_line, pred_line)
+        f1_all      += compute_f1(gold_line, pred_line) 
     
     exact       = 1.0 * exact_num / test_num
     f1          = 1.0 * f1_all / test_num
@@ -238,12 +238,15 @@ def eval(test_gold, test_pred):
 
 if __name__ =='__main__':
     
-    #data_split()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--step',type=int,help='step')
+    args = parser.parse_args()
 
-    print(eval('../kescidata/valid_b_targets_2000', '../train/1/valid_b_targets_5000'))
+    print(eval('../kescidata/valid_b_targets_2000', '../train/1/valid_b_targets_'+str(args.step)))
     
+    #data_split()
     #vis_test()
 
-    smiles0 = 'CCc1nn(C)c2C(=O)NC(=Nc12)c3cc(ccc3OCC)S(=O)(=O)N4CCN(C)CC4'
-    smiles1 = 'CCCc1nc(C)c2C(=O)N=C(Nn12)c3cc(ccc3OCC)S(=O)(=O)N4CCN(CC)CC4'
+    #smiles0 = 'CCc1nn(C)c2C(=O)NC(=Nc12)c3cc(ccc3OCC)S(=O)(=O)N4CCN(C)CC4'
+    #smiles1 = 'CCCc1nc(C)c2C(=O)N=C(Nn12)c3cc(ccc3OCC)S(=O)(=O)N4CCN(CC)CC4'
     #vis_rdkit(smiles1)
