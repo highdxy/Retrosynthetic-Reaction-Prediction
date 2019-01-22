@@ -31,6 +31,9 @@ def vis_test(test_file='test_targets_40000',test_path='../results/'):
 def compute_exact(r_gold, r_pred):
     return int(r_gold == r_pred)
 
+def compute_exact_(r_gold, r_pred):
+    return r_gold.split('.') == r_pred.split('.')
+
 def compute_f1(r_gold, r_pred):
     gold_toks = r_gold.split(' ') 
     pred_toks = r_pred.split(' ')
@@ -42,6 +45,20 @@ def compute_f1(r_gold, r_pred):
     recall      = 1.0 * num_same / len(gold_toks)
     f1          = (2 * precision * recall) / (precision + recall)
     return f1
+
+def compute_f1_(r_gold, r_pred):
+    gold_toks = r_gold.split('.')
+    pred_toks = r_pred.split('.')
+    common = collections.Counter(gold_toks) & collections.Counter(pred_toks)
+    num_same = sum(common.values())
+    if num_same == 0:
+        return 0
+    precision   = 1.0 * num_same / len(pred_toks)
+    recall      = 1.0 * num_same / len(gold_toks)
+    f1          = (2 * precision * recall) / (precision + recall)
+    return f1
+
+
 
 def data_split(space=True,datapath='../kescidata/',savepath='../kescidata/'):
     
@@ -206,8 +223,12 @@ def eval(test_gold, test_pred):
     f1          = 0.0
 
     for i in tqdm( range(test_num) ):
-        exact_num   += compute_exact(gold_lines[i], pred_lines[i])
-        f1_all      += compute_f1(gold_lines[i], pred_lines[i]) 
+        
+        gold_line = gold_lines[i].strip()
+        pred_line = pred_lines[i].strip()  
+
+        exact_num   += compute_exact_(gold_line, pred_line)
+        f1_all      += compute_f1_(gold_line, pred_line) 
     
     exact       = 1.0 * exact_num / test_num
     f1          = 1.0 * f1_all / test_num
@@ -217,9 +238,9 @@ def eval(test_gold, test_pred):
 
 if __name__ =='__main__':
     
-    data_split()
+    #data_split()
 
-    #print(eval('../kescidata/valid_b_targets', '../train/1/valid_b_targets_5000'))
+    print(eval('../kescidata/valid_b_targets_2000', '../train/1/valid_b_targets_5000'))
     
     #vis_test()
 
