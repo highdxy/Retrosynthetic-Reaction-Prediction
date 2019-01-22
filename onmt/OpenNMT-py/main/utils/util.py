@@ -43,9 +43,156 @@ def compute_f1(r_gold, r_pred):
     f1          = (2 * precision * recall) / (precision + recall)
     return f1
 
+def data_split(space=True,datapath='../kescidata/',savepath='../kescidata/'):
+    
+    with open(datapath+'train.txt', 'r') as ftrain:
+        data = ftrain.readlines()
+        del(data[0])
+    with open(datapath+'test.txt', 'r') as ftest:
+        test = ftest.readlines()
+        del(test[0])
+
+    train_src = open(savepath+'train_sources', 'w+')
+    train_tgt = open(savepath+'train_targets', 'w+')
+    
+    valid_a_src = open(savepath+'valid_a_sources', 'w+')
+    valid_a_tgt = open(savepath+'valid_a_targets', 'w+')
+    valid_b_src = open(savepath+'valid_b_sources', 'w+')
+    valid_b_tgt = open(savepath+'valid_b_targets', 'w+')
+    
+    test_src  = open(savepath+'test_sources', 'w+')
+    vocab_file= open(datapath+'vocab','w+') 
+    
+    import random
+    random.seed(1)
+    
+    random.shuffle(data)
+    
+    kfolds = 5
+    valid_b_num = 20000
+
+    vocab = set()
+
+    src_len = []
+    tgt_len = []
+    for i in tqdm ( range(0, int( len(data) * (1.0 - 1.0/5) ) ) ):   
+    #for i in tqdm ( range(0, 10) ):   
+        row = data[i][:data[i].find('|')]
+        reac_list=row.split(',')[1].split('>')[0]
+        reag_list=row.strip().split(',')[1].split('>')[1]
+        prod_list=row.strip().split(',')[1].split('>')[2]
+        
+        if space:
+            prod_list   = ' '.join(prod_list)
+            reag_list   = ' '.join(reag_list)
+            reac_list   = ' '.join(reac_list)
+        
+        vocab = set(reac_list) | set(reag_list) | set(prod_list) | vocab
+        
+        if space:
+            src_len.append(len( prod_list+' . '+reag_list+'\n' ))
+        else:
+            src_len.append(len( prod_list+'.'+reag_list+'\n' ))
+        tgt_len.append(len( reac_list+'\n' ))
+        
+        if space:
+            train_src.write(prod_list+' . '+reag_list+'\n')
+        else:
+            train_src.write(prod_list+'.'+reag_list+'\n')
+        train_tgt.write(reac_list+'\n')
+    
+
+    for j in tqdm ( range(int( len(data) * (1.0 - 1.0/5) ), len(data)-valid_b_num)):
+    #for j in tqdm ( range(10, 14) ):   
+        row = data[j][:data[j].find('|')]
+        reac_list=row.split(',')[1].split('>')[0]
+        reag_list=row.strip().split(',')[1].split('>')[1]
+        prod_list=row.strip().split(',')[1].split('>')[2]
+        
+        if space:
+            prod_list   = ' '.join(prod_list)
+            reag_list   = ' '.join(reag_list)
+            reac_list   = ' '.join(reac_list)
+        
+        vocab = set(reac_list) | set(reag_list) | set(prod_list) | vocab
+        
+        if space:
+            src_len.append(len( prod_list+' . '+reag_list+'\n' ))
+        else:
+            src_len.append(len( prod_list+'.'+reag_list+'\n' ))
+        tgt_len.append(len( reac_list+'\n' ))
+        
+        if space:
+            valid_a_src.write(prod_list+' . '+reag_list+'\n')
+        else:
+            valid_a_src.write(prod_list+'.'+reag_list+'\n')
+        valid_a_tgt.write(reac_list+'\n')
+    
+    for p in tqdm ( range(len(data)-valid_b_num, len(data))):
+    #for j in tqdm ( range(10, 14) ):   
+        row = data[p][:data[p].find('|')]
+        reac_list=row.split(',')[1].split('>')[0]
+        reag_list=row.strip().split(',')[1].split('>')[1]
+        prod_list=row.strip().split(',')[1].split('>')[2]
+        
+        if space:
+            prod_list   = ' '.join(prod_list)
+            reag_list   = ' '.join(reag_list)
+            reac_list   = ' '.join(reac_list)
+        
+        vocab = set(reac_list) | set(reag_list) | set(prod_list) | vocab
+        
+        if space:
+            src_len.append(len( prod_list+' . '+reag_list+'\n' ))
+        else:
+            src_len.append(len( prod_list+'.'+reag_list+'\n' ))
+        tgt_len.append(len( reac_list+'\n' ))
+        
+        if space:
+            valid_b_src.write(prod_list+' . '+reag_list+'\n')
+        else:
+            valid_b_src.write(prod_list+'.'+reag_list+'\n')
+        valid_b_tgt.write(reac_list+'\n')
+    
+    for k in tqdm ( range(0, len(test))):
+        row = test[k][:test[k].find('|')]
+        reag_list=row.strip().split(',')[1].split('>')[0]
+        prod_list=row.strip().split(',')[1].split('>')[1]
+        
+        if space:
+            prod_list   = ' '.join(prod_list)
+            reag_list   = ' '.join(reag_list)
+        
+        vocab = set(reag_list) | set(prod_list) | vocab
+        
+        if space:
+            src_len.append(len( prod_list+' . '+reag_list+'\n' ))
+        else:
+            src_len.append(len( prod_list+'.'+reag_list+'\n' ))
+        
+        if space:
+            test_src.write(prod_list+' . '+reag_list+'\n')
+        else:
+            test_src.write(prod_list+'.'+reag_list+'\n')
+    
+    for elem in tqdm( vocab ):
+        vocab_file.write(elem+'\n')
+
+    print('max len of src: ',max(src_len), ' mean len of src: ',sum(src_len)/len(src_len))
+    print('max len of tgt: ',max(tgt_len), ' mean len of tgt: ',sum(tgt_len)/len(tgt_len))
+    
+    train_src.close()
+    train_tgt.close()
+    valid_a_src.close()
+    valid_a_tgt.close()
+    valid_b_src.close()
+    valid_b_tgt.close()
+    test_src.close()
+    vocab_file.close()
+
 def eval(test_gold, test_pred):
     with open(test_gold, 'r') as fgold:
-        gold_lines = fgold.readlines()[:10]
+        gold_lines = fgold.readlines()
     with open(test_pred, 'r') as fpred:
         pred_lines = fpred.readlines()
 
@@ -70,7 +217,9 @@ def eval(test_gold, test_pred):
 
 if __name__ =='__main__':
     
-    print(eval('../rawdata/test_targets', '../train/0/test_targets_'))
+    data_split()
+
+    #print(eval('../kescidata/valid_b_targets', '../train/1/valid_b_targets_5000'))
     
     #vis_test()
 
