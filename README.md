@@ -4,15 +4,22 @@
 
 [Competition URL](https://www.kesci.com/home/competition/merck?from=mpdf)
 
-Model: Transformer
+Model: Transformer/RNN
 
-Framework: tensor2tensor
+Framework: tensor2tensor/opennmt-py
 
 Data format: SMILES
 
 Visualize Tool: RDKit
 
+
 ### Evaluation:
+
+Evaluation Method is the same as SQuAD dataset, [code here](https://worksheets.codalab.org/rest/bundles/0x4c6febb3f9574587a6729b23b5e2f290/contents/blob/)
+
+
+#### Data from [《Retrosynthetic Reaction Prediction Using Neural Sequence to Sequence Models》](https://github.com/pandegroup/reaction_prediction_seq2seq)
+
 
 |modelName|framework |score | f1 | em |
 | ------ |------|------ |------ | ------ |
@@ -24,3 +31,10 @@ Visualize Tool: RDKit
 |transformer-base-400000| opennmt-py |0.660 | 0.877 | 0.007 |
 |transformer-base-800000| opennmt-py |0.664 | 0.881 | 0.013 |
 |rnn-based-115000| opennmt-py |0.415 | 0.554 | 0.000 |
+
+#### Data from "默克杯"比赛:
+
+|modelName|framework |score | f1 | em |
+| ------ |------|------ |------ | ------ |
+|rnn-based-6000| opennmt-py |0.500 | 0.663 | 0.000 |
+
