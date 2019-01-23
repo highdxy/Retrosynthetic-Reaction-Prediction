@@ -40,7 +40,7 @@ Evaluation Method is the same as SQuAD dataset, [code here](https://worksheets.c
 | ------ |------|------ |------ | ------ |
 |rnn-based-6000| opennmt-py |0.500 | 0.663 | 0.000 |
 
-#### Userful Paper and Code:
+#### Useful Paper and Code:
 
 《Retrosynthetic Reaction Prediction Using Neural Sequence-to-Sequence Models》
 
