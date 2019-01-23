@@ -2,6 +2,8 @@
 
 2019"默克"杯逆合成反应预测大赛
 
+**The work is under doing!!!**
+
 [Competition URL](https://www.kesci.com/home/competition/merck?from=mpdf)
 
 Model: Transformer/RNN
@@ -37,4 +39,11 @@ Evaluation Method is the same as SQuAD dataset, [code here](https://worksheets.c
 |modelName|framework |score | f1 | em |
 | ------ |------|------ |------ | ------ |
 |rnn-based-6000| opennmt-py |0.500 | 0.663 | 0.000 |
+
+#### Userful Paper and Code:
+
+《Retrosynthetic Reaction Prediction Using Neural Sequence-to-Sequence Models》
+
+《Found in Translation Predicting Outcomes of Complex Organic Chemistry Reactions using Neural Sequence to Sequence Models》
+
 
