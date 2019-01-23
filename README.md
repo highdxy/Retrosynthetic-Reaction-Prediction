@@ -2,7 +2,7 @@
 
 2019"默克"杯逆合成反应预测大赛
 
-**The work is under doing!!!**
+**The work is ongoing!!!**
 
 [Competition URL](https://www.kesci.com/home/competition/merck?from=mpdf)
 
