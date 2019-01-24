@@ -34,9 +34,11 @@ Evaluation Method is the same as SQuAD dataset, [code here](https://worksheets.c
 
 #### Data from "默克杯"比赛:
 
-|modelName|framework |score | f1 | em |
-| ------ |------|------ |------ | ------ |
-|rnn-based-6000| opennmt-py |0.500 | 0.663 | 0.000 |
+|modelName|framework |**metric**|score | f1 | em |
+| ------ |------|------ |------|------ | ------ |
+|rnn-based-6000| opennmt-py |char-based|0.500 | 0.663 | 0.000 |
+|rnn-based-48000| opennmt-py |char-based|0.505 | 0.673 | 0.0015 |
+|rnn-based-48000| opennmt-py |reactants-based|0.0098 | 0.0126 | 0.0015 |
 
 #### Useful Paper and Code:
 
